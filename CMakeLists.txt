@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
-project(server)
+project(Server)
 
 set(CMAKE_CXX_STANDARD 98)
 
-set(SOURCE_FILES main.cpp)
-add_executable(server ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp Server.cpp Server.h)
+add_executable(Server ${SOURCE_FILES})

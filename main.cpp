@@ -1,6 +1,13 @@
+#include "Server.h"
 #include <iostream>
-
+#include <stdlib.h>
+using namespace std;
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Server server(8000);
+    try {
+        server.start();
+    } catch (const char *msg) {
+        cout << "Cannot start server. Reason: " << msg << endl;
+        exit(-1);
+    }
 }
