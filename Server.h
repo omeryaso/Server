@@ -10,12 +10,18 @@ class Server {
 public:
     Server(int port);
     void start();
+    void Play();
     void stop();
+
 private:
+    int fCS; // first client socket
+    int sCS; // second client socket
     int port;
     int serverSocket; // the socket's file descriptor
-    void handleClient(int clientSocket);
-    int calc(int arg1, const char op, int arg2) const;
+    static const int maxMove = 8; // the input maximum size.
+    bool gameOver = false;
+    int acceptClients();
+    int handleClients(int firstClient, int secondClient);
 };
 
 
