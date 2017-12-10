@@ -90,13 +90,19 @@ int Server::handleClients(int carrier, int receiver) {
         return 1;
     }
 
-    cout << "Got input: " << row << ", " << col << endl;
+    cout << "Got input: " << row+1 << ", " << col+1 << endl;
 
     //check if the input value indicates that the game is over
-    if (row == -1 || col == -1)
+    if (row == -1 && col == -1)
     {
-        cout << "Game Over" << endl;
+        cout << "End" << endl;
         gameOver = true;
+        return 0;
+    }
+
+    if (row == -2 && col == -2){
+        cout<<"NoMove"<<endl;
+        return 0;
     }
 
     // Write the result back to the client
