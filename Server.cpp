@@ -59,13 +59,17 @@ void Server::Play() {
             }
 
             if(error)
-                return;
+                gameOver=true;
         }
 
         // Close communication with the first client
         close(fCS);
+        cout << "First client disconnected" << endl;
         // Close communication with the second client
         close(sCS);
+        cout << "Second client disconnected" << endl;
+        gameOver = false;
+        firstTurn = true;
     }
 
 }
@@ -93,14 +97,14 @@ int Server::handleClients(int carrier, int receiver) {
     cout << "Got input: " << row+1 << ", " << col+1 << endl;
 
     //check if the input value indicates that the game is over
-    if (row == -1 && col == -1)
+    if (row == -2 && col == -2)
     {
         cout << "End" << endl;
         gameOver = true;
         return 0;
     }
 
-    if (row == -2 && col == -2){
+    if (row == -1 && col == -1){
         cout<<"NoMove"<<endl;
         return 0;
     }
