@@ -8,7 +8,7 @@
 
 class Server {
 public:
-    Server(int port);
+    Server();
     void start();
     void Play();
     void stop();

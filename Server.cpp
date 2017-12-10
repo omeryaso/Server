@@ -9,11 +9,18 @@
 #include <string.h>
 #include <iostream>
 #include <stdio.h>
+#include <fstream>
+
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 2
 
 
-Server::Server(int port): port(port), serverSocket(0) {
+Server::Server(): serverSocket(0) {
+    int p;
+    ifstream objectFile("../serverConfig.txt");
+    objectFile >> p;
+    objectFile.close();
+    port = p;
     cout << "Server" << endl;
 }
 

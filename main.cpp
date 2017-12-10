@@ -1,9 +1,11 @@
 #include "Server.h"
 #include <iostream>
 #include <stdlib.h>
+#include <fstream>
+
 using namespace std;
 int main() {
-    Server server(8000);
+    Server server;
     try {
         server.start();
     } catch (const char *msg) {
