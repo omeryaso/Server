@@ -72,35 +72,37 @@ void Server::Play() {
 
 // Handle requests from a specific client
 int Server::handleClients(int carrier, int receiver) {
-    char input[maxMove];
-
+//    char input[maxMove];
+//    bzero((char *)input, sizeof(input));
+    int row, col;
     // Read new exercise arguments
-    int n = read(carrier, &input, sizeof(input));
-
-    //input validity
-    if (n == -1) {
+    int r = read(carrier, &row, sizeof(int));
+    int c = read(carrier, &col, sizeof(int));
+    //inputx validity
+    if (r == -1 || c == -1) {
         cout << "Error reading move" << endl;
         gameOver = true;
         return 1;
     }
-    if (n == 0) {
+    if (r == 0 || c == 0) {
         cout << "Client disconnected" << endl;
         gameOver = true;
         return 1;
     }
 
-    cout << "Got input: " << input << endl;
+    cout << "Got input: " << row << ", " << col << endl;
 
     //check if the input value indicates that the game is over
-    if (strcmp(input, "END") == 0)
+    if (row == -1 || col == -1)
     {
         cout << "Game Over" << endl;
         gameOver = true;
     }
 
     // Write the result back to the client
-    n = write(receiver, &input, sizeof(input));
-    if (n == -1) {
+    r = write(receiver, &row, sizeof(int));
+    c = write(receiver, &col, sizeof(int));
+    if (r == -1 || c == -1) {
         cout << "Error writing to socket" << endl;
         return 1;
     }
