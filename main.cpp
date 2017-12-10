@@ -5,6 +5,7 @@
 
 using namespace std;
 int main() {
+    try {
     Server server;
     try {
         server.start();
@@ -14,4 +15,7 @@ int main() {
     }
     server.Play();
     server.stop();
+    } catch (const char *msg) {
+        cout << msg << endl;
+    }
 }

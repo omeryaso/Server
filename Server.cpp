@@ -18,6 +18,8 @@ using namespace std;
 Server::Server(): serverSocket(0) {
     int p;
     ifstream objectFile("../serverConfig.txt");
+    if(!objectFile)
+        throw "Error reading network configuration file";
     objectFile >> p;
     objectFile.close();
     port = p;
