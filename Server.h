@@ -19,7 +19,7 @@ private:
     int port;
     int serverSocket; // the socket's file descriptor
     static const int maxMove = 8; // the input maximum size.
-    bool gameOver = false;
+    bool gameOver;
     int acceptClients();
     int handleClients(int firstClient, int secondClient);
 };

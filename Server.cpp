@@ -16,6 +16,7 @@ using namespace std;
 
 
 Server::Server(): serverSocket(0) {
+    gameOver = false;
     int p;
     ifstream objectFile("../serverConfig.txt");
     if(!objectFile)
