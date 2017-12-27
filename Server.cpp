@@ -121,29 +121,32 @@ int Server::handleClients(int carrier, int receiver) {
 
 //      TODO: Convert input to string
 
-    cout << "Got input: " << row+1 << ", " << col+1 << endl;
+    cout << "Got input: " << input << endl;
 
     //check if the input value indicates that the game is over
-    if (input == "End")
+    if (!strcmp(input, "End"))
     {
         cout << "End" << endl;
         gameOver = true;
         return 0;
     }
 
-    if (input == "NoMove"){
+    if (!strcmp(input, "NoMove")){
         cout << "NoMove" << endl;
         return 0;
     }
 
-    // Convert the number into a string.
-    row = atoi(reinterpret_cast<const char *>(input[0]));
-    col = atoi(reinterpret_cast<const char *>(input[2]));
-
     // Write the result back to the client
-    r = write(receiver, &row, sizeof(int));
-    c = write(receiver, &col, sizeof(int));
-    if (r == -1 || c == -1) {
+    r = write(receiver, &size, sizeof(size));
+
+    if (r == -1) {
+        cout << "Error writing to socket" << endl;
+        return 1;
+    }
+
+    c = write(receiver, &input, sizeof(input));
+
+    if (c == -1) {
         cout << "Error writing to socket" << endl;
         return 1;
     }
