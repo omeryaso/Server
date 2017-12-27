@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <fstream>
+#include <cstdlib>
 
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 2
@@ -86,38 +87,58 @@ void Server::Play() {
 
 // Handle requests from a specific client
 int Server::handleClients(int carrier, int receiver) {
-//    char input[maxMove];
+
 //    bzero((char *)input, sizeof(input));
     int row, col;
+    int size = 0;
     // Read new exercise arguments
-    int r = read(carrier, &row, sizeof(int));
-    int c = read(carrier, &col, sizeof(int));
-    //inputx validity
-    if (r == -1 || c == -1) {
+    int r = read(carrier, &size, sizeof(int));
+
+    char input[size];
+    if (r == -1) {
         cout << "Error reading move" << endl;
         gameOver = true;
         return 1;
     }
-    if (r == 0 || c == 0) {
+    if (r == 0) {
         cout << "Client disconnected" << endl;
         gameOver = true;
         return 1;
     }
 
+    int c = read(carrier, &input, size * sizeof(char));
+    //inputx validity
+    if (c == -1) {
+        cout << "Error reading move" << endl;
+        gameOver = true;
+        return 1;
+    }
+    if (c == 0) {
+        cout << "Client disconnected" << endl;
+        gameOver = true;
+        return 1;
+    }
+
+//      TODO: Convert input to string
+
     cout << "Got input: " << row+1 << ", " << col+1 << endl;
 
     //check if the input value indicates that the game is over
-    if (row == -2 && col == -2)
+    if (input == "End")
     {
         cout << "End" << endl;
         gameOver = true;
         return 0;
     }
 
-    if (row == -1 && col == -1){
-        cout<<"NoMove"<<endl;
+    if (input == "NoMove"){
+        cout << "NoMove" << endl;
         return 0;
     }
+
+    // Convert the number into a string.
+    row = atoi(reinterpret_cast<const char *>(input[0]));
+    col = atoi(reinterpret_cast<const char *>(input[2]));
 
     // Write the result back to the client
     r = write(receiver, &row, sizeof(int));
