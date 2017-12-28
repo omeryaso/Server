@@ -6,8 +6,12 @@
 #define SERVER_JOINCOMMAND_H
 
 
-class JoinCommand {
+#include "Command.h"
 
+class JoinCommand: public Command {
+
+public:
+    virtual void execute(vector<string> args) {}
 };
 
 

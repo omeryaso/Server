@@ -6,8 +6,12 @@
 #define SERVER_LISTGAMESCOMMAND_H
 
 
-class ListGamesCommand {
+#include "Command.h"
 
+class ListGamesCommand: public Command {
+
+public:
+    virtual void execute(vector<string> args) {}
 };
 
 
