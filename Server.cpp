@@ -87,14 +87,13 @@ void Server::Play() {
 
 // Handle requests from a specific client
 int Server::handleClients(int carrier, int receiver) {
-
-    int row, col;
+    
     int size = 0;
     // Read new exercise arguments
     int r = read(carrier, &size, sizeof(int));
 
     char input[size];
-    bzero((char *)input, sizeof(input));
+    bzero((char *)input, maxMove*sizeof(char));
     if (r == -1) {
         cout << "Error reading move" << endl;
         gameOver = true;
