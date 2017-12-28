@@ -10,7 +10,10 @@
 class PlayCommand: public Command {
 
 public:
-    virtual void execute(vector<string> args) {}
+
+    PlayCommand();
+
+    virtual void execute(vector<string> args);
 };
 
 

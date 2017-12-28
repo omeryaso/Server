@@ -6,9 +6,17 @@
 #define SERVER_CLOSECOMMAND_H
 
 
-class CloseCommand {
+#include "Command.h"
 
+class CloseCommand: public Command {
+
+public:
+
+    CloseCommand();
+
+    virtual void execute(vector<string> args);
 };
+
 
 
 #endif //SERVER_CLOSECOMMAND_H

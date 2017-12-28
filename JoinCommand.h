@@ -11,7 +11,10 @@
 class JoinCommand: public Command {
 
 public:
-    virtual void execute(vector<string> args) {}
+
+    JoinCommand();
+
+    virtual void execute(vector<string> args);
 };
 
 

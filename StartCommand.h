@@ -6,11 +6,21 @@
 #define SERVER_STARTCOMMAND_H
 
 #include "Command.h"
+#include "Server.h"
+#include "Room.h"
+
 
 class StartCommand: public Command {
 
 public:
-    virtual void execute(vector<string> args) {}
+
+    StartCommand(vector<Room> &gamesList , int socket);
+
+    virtual void execute(vector<string> args);
+
+private:
+    //list of rooms
+
 };
 
 #endif //SERVER_STARTCOMMAND_H

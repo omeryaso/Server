@@ -3,3 +3,11 @@
 //
 
 #include "StartCommand.h"
+
+StartCommand::StartCommand(vector<Game> &gamesList, int socket) {
+
+}
+
+void StartCommand::execute(vector<string> args) {
+
+}

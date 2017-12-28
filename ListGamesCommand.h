@@ -7,10 +7,15 @@
 
 
 #include "Command.h"
+#include "Room.h"
 
 class ListGamesCommand: public Command {
 
+
 public:
+
+    ListGamesCommand(vector<Room> &gamesList , int socket);
+
     virtual void execute(vector<string> args) {}
 };
 

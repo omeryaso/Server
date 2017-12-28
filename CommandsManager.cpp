@@ -3,10 +3,20 @@
 //
 
 #include "CommandsManager.h"
+#include "StartCommand.h"
+#include "ListGamesCommand.h"
+#include "JoinCommand.h"
+#include "PlayCommand.h"
+#include "CloseCommand.h"
+
 
 CommandsManager::CommandsManager() {
-//    commandsMap["print"] = new PrintCommand();
-    // Add more commands...
+    commandsMap["start"] = new StartCommand();
+    commandsMap["list_games"] = new ListGamesCommand();
+    commandsMap["join"] = new JoinCommand();
+    commandsMap["play"] = new PlayCommand();
+    commandsMap["close"] = new CloseCommand();
+
 }
 
 void CommandsManager::executeCommand(string command, vector<string> args) {
