@@ -8,9 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <iostream>
-#include <stdio.h>
 #include <fstream>
-#include <cstdlib>
 
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 2
@@ -87,7 +85,7 @@ void Server::Play() {
 
 // Handle requests from a specific client
 int Server::handleClients(int carrier, int receiver) {
-    
+
     int size = 0;
     // Read new exercise arguments
     int r = read(carrier, &size, sizeof(int));
