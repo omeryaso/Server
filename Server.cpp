@@ -117,10 +117,6 @@ int Server::handleClients(int carrier, int receiver) {
         return 1;
     }
 
-//      TODO: Convert input to string
-
-    cout << "Got input: " << input << endl;
-
     //check if the input value indicates that the game is over
     if (!strcmp(input, "End"))
     {
@@ -132,6 +128,8 @@ int Server::handleClients(int carrier, int receiver) {
         cout << "NoMove" << endl;
         return 0;
     }
+
+    cout << "Got input: " << input << endl;
 
     // Write the result back to the client
     r = write(receiver, &size, sizeof(size));
