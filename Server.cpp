@@ -88,13 +88,13 @@ void Server::Play() {
 // Handle requests from a specific client
 int Server::handleClients(int carrier, int receiver) {
 
-//    bzero((char *)input, sizeof(input));
     int row, col;
     int size = 0;
     // Read new exercise arguments
     int r = read(carrier, &size, sizeof(int));
 
     char input[size];
+    bzero((char *)input, sizeof(input));
     if (r == -1) {
         cout << "Error reading move" << endl;
         gameOver = true;
@@ -110,12 +110,10 @@ int Server::handleClients(int carrier, int receiver) {
     //inputx validity
     if (c == -1) {
         cout << "Error reading move" << endl;
-        gameOver = true;
         return 1;
     }
     if (c == 0) {
         cout << "Client disconnected" << endl;
-        gameOver = true;
         return 1;
     }
 
@@ -127,8 +125,7 @@ int Server::handleClients(int carrier, int receiver) {
     if (!strcmp(input, "End"))
     {
         cout << "End" << endl;
-        gameOver = true;
-        return 0;
+        return 1;
     }
 
     if (!strcmp(input, "NoMove")){
