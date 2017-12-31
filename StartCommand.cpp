@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 #include "StartCommand.h"
+#include "RoomList.h"
 
 StartCommand::StartCommand() {
 
