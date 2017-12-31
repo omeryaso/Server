@@ -3,3 +3,11 @@
 //
 
 #include "ListGamesCommand.h"
+
+ListGamesCommand::ListGamesCommand() {
+
+}
+
+void ListGamesCommand::execute(vector<string> args) {
+
+}

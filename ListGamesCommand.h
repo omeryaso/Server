@@ -14,9 +14,9 @@ class ListGamesCommand: public Command {
 
 public:
 
-    ListGamesCommand(vector<Room> &gamesList , int socket);
+    ListGamesCommand();
 
-    virtual void execute(vector<string> args) {}
+    virtual void execute(vector<string> args)
 };
 
 

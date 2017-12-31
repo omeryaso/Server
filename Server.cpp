@@ -11,7 +11,7 @@
 #include <fstream>
 
 using namespace std;
-#define MAX_CONNECTED_CLIENTS 2
+#define MAX_CONNECTED_CLIENTS 20
 
 
 Server::Server(): serverSocket(0) {
@@ -104,7 +104,7 @@ int Server::handleClients(int carrier, int receiver) {
     }
 
     int c = read(carrier, &input, size * sizeof(char));
-    //inputx validity
+    //input validity
     if (c == -1) {
         cout << "Error reading move" << endl;
         return 1;
