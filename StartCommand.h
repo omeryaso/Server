@@ -14,12 +14,11 @@ class StartCommand: public Command {
 
 public:
 
-    StartCommand(vector<Room> &gamesList , int socket);
-
+    StartCommand(vector<Room> &gl);
     virtual void execute(vector<string> args);
 
 private:
-    //list of rooms
+    vector<Room>& gamesList;
 
 };
 

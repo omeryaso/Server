@@ -4,10 +4,11 @@
 
 #include "StartCommand.h"
 
-StartCommand::StartCommand(vector<Game> &gamesList, int socket) {
-
-}
+StartCommand::StartCommand(vector<Room> &gl): gamesList(gl){}
 
 void StartCommand::execute(vector<string> args) {
 
+    string roomName = args.at(0);
+
+    if ()
 }
