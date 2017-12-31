@@ -14,9 +14,7 @@ class ListGamesCommand: public Command {
 
 public:
 
-    ListGamesCommand();
-
-    virtual void execute(vector<string> args)
+    virtual void execute(vector<string> args);
 };
 
 
