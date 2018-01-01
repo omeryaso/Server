@@ -46,3 +46,8 @@ vector<string> RoomList::getAvailableRooms() {
 
     return availableRooms;
 }
+
+void RoomList::setEnded(string &roomName) {
+    roomsMap[roomName]->setEnded();
+
+}

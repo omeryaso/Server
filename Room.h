@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum state {waiting = 0, active = 1};
+enum state {waiting = 0, active = 1, finished = 2};
 
 
 class Room {
@@ -41,6 +41,9 @@ public:
     * and 1 if the room is active.
     **/
     int getState();
+
+
+    void setEnded();
 
     /**
     * @name : getFirstSocket

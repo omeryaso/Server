@@ -14,9 +14,11 @@ public:
     static RoomList *getInstance();
     void insertRoom(Room &room, string &roomName);
     void deleteRoom(string &roomName);
+    void setEnded(string &roomName);
     Room* getRoom(string &roomName);
     bool isRoomExist(string &roomName);
     vector<string> getAvailableRooms();
+
 private:
     pthread_mutex_t roomsMapMutex;
     map<string, Room*> roomsMap;
@@ -29,6 +31,3 @@ private:
 
 
 #endif //SERVER_ROOMLIST_H
-
-
-

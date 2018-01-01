@@ -29,3 +29,7 @@ int Room::getFirstSocket() const{
 int Room::getSecondSocket() const{
     return secondSocket;
 }
+
+void Room::setEnded(){
+    roomState = finished;
+}
