@@ -11,12 +11,53 @@
 
 class RoomList {
 public:
+    /**
+    * @name : Room
+    * @parameters : socket- this will be the first client socket
+    *               room - this is the name (string) of the room
+    **/
     static RoomList *getInstance();
+
+    /**
+    * @name : RoomList
+    * @parameters : socket- this will be the first client socket
+    * @return:
+    **/
     void insertRoom(Room &room, string &roomName);
+
+    /**
+    * @name : RoomList
+    * @parameters :
+    * @return:
+    **/
     void deleteRoom(string &roomName);
+
+    /**
+     * @name : RoomList
+     * @parameters :
+     * @return:
+     **/
     void setEnded(string &roomName);
+
+    /**
+    * @name : RoomList
+    * @parameters :
+    * @return:
+    **/
     Room* getRoom(string &roomName);
+
+    /**
+    * @name : RoomList
+    * @parameters : socket- this will be the first client socket
+    * @return:
+    **/
     bool isRoomExist(string &roomName);
+
+    /**
+    * @name : RoomList
+    * @parameters :
+    * @return:
+    **/
     vector<string> getAvailableRooms();
 
 private:

@@ -4,8 +4,6 @@
 
 #include "CommandsManager.h"
 #include "StartCommand.h"
-//#include "CloseCommand.h"
-#include "PlayCommand.h"
 #include "JoinCommand.h"
 #include "ListGamesCommand.h"
 
@@ -27,8 +25,6 @@ CommandsManager::CommandsManager() {
     commandsMap["start"] = new StartCommand();
     commandsMap["list_games"] = new ListGamesCommand();
     commandsMap["join"] = new JoinCommand();
-    commandsMap["play"] = new PlayCommand();
-//    commandsMap["close"] = new CloseCommand();
 
 }
 

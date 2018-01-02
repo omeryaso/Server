@@ -193,7 +193,7 @@ static void *handleClient(void *tArgs) {
         iss >> arg;
         argsStr.push_back(arg);
     }
-    CommandsManager::getInstance()->executeCommand(command, argsStr, clientSocket);
+    CommandsManager::getInstance()->executeCommand(command, argsStr, clientSocket, args->id );
     return NULL;
 }
 

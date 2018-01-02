@@ -14,7 +14,7 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
     std::ostringstream oss;
     RoomList* roomList = RoomList::getInstance();
     vector<string> rooms = roomList->getAvailableRooms();
-    int size = 2 * rooms.size() + 1;
+    int size = 2 * rooms.size();
 
     if (!rooms.empty()) {
         // Convert all but the last element to avoid a trailing ","
@@ -32,11 +32,13 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
         return;
     }
 
-    // Write the list back to the client
-    int l = write(socket, oss, sizeof(oss));
+    if(size) {
+        // Write the list back to the client
+        int l = write(socket, oss, sizeof(oss));
 
-    if (l == -1) {
-        cout << "ListGames CMD: Error writing to socket" << endl;
-        return;
+        if (l == -1) {
+            cout << "ListGames CMD: Error writing to socket" << endl;
+            return;
+        }
     }
 }
