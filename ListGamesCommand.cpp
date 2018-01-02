@@ -12,7 +12,6 @@
 
 void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* threadId) {
     std::ostringstream oss;
-    int receiver = atoi(args.at(0).c_str());
     RoomList* roomList = RoomList::getInstance();
     vector<string> rooms = roomList->getAvailableRooms();
     int size = 2 * rooms.size() + 1;
@@ -26,7 +25,7 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
     }
 
     // Write the list size back to the client
-    int s = write(receiver, &size, sizeof(size));
+    int s = write(socket, &size, sizeof(size));
 
     if (s == -1) {
         cout << "ListGames CMD: Error writing to socket" << endl;
@@ -34,7 +33,7 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
     }
 
     // Write the list back to the client
-    int l = write(receiver, oss, sizeof(oss));
+    int l = write(socket, oss, sizeof(oss));
 
     if (l == -1) {
         cout << "ListGames CMD: Error writing to socket" << endl;
