@@ -14,7 +14,6 @@ void StartCommand::execute(vector<string> args, int socket, pthread_t*threadId) 
     // server socket
     RoomList* roomList = RoomList::getInstance();
 
-    int order = 1;
     int error = -1;
 
     //if the room exists return to the player -1
@@ -28,11 +27,5 @@ void StartCommand::execute(vector<string> args, int socket, pthread_t*threadId) 
     Room room(socket, args.at(0));
     roomList->insertRoom(room,args[0]);
 
-    //returns to each client if he connected first or second.
-    //in case of an error prints were the error is end returns 0.
-    if(write(socket, &order, sizeof(int)) == -1) {
-        cout << "Error writing the turn of the first client";
-        return;
-    }
-    cout << args.at(0)<< ": first client connected" << endl;
+
 }
