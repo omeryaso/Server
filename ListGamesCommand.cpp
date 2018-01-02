@@ -15,10 +15,9 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
     int receiver = atoi(args.at(0).c_str());
     RoomList* roomList = RoomList::getInstance();
     vector<string> rooms = roomList->getAvailableRooms();
-    int size = 2 * rooms.size() - 1;
+    int size = 2 * rooms.size() + 1;
 
-    if (!rooms.empty())
-    {
+    if (!rooms.empty()) {
         // Convert all but the last element to avoid a trailing ","
         copy(rooms.begin(), rooms.end()-1, ostream_iterator<string>(oss, ","));
 

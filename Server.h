@@ -7,6 +7,14 @@
 
 
 #include <sys/types.h>
+#include "CommandsManager.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <unistd.h>
 
 class Server {
 public:
@@ -18,6 +26,7 @@ private:
     int port;
     int serverSocket; // the socket's file descriptor
     pthread_t serverThreadId;
+    bool shutDown = false;
 };
 
 

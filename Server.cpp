@@ -3,14 +3,6 @@
 //
 
 #include "Server.h"
-#include "CommandsManager.h"
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <unistd.h>
 
 using namespace std;
 
@@ -54,6 +46,7 @@ void Server::start() {
     // Start listening to incoming connections
     listen(serverSocket, MAX_CONNECTED_CLIENTS);
     pthread_create(&serverThreadId, NULL, &acceptClients, (void *)serverSocket);
+
 }
 
 // Handle requests from a specific client
