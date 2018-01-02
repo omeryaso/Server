@@ -9,8 +9,9 @@ Room::Room(int socket, const string &roomName) :firstSocket(socket), name(roomNa
     secondSocket = NULL;
 }
 
-void Room::join(int socket) {
+void Room::join(int socket, pthread_t* threadId) {
     secondSocket = socket;
+    threadID = threadId;
     roomState = active;
 }
 
@@ -32,4 +33,8 @@ int Room::getSecondSocket() const{
 
 void Room::setEnded(){
     roomState = finished;
+}
+
+pthread_t* Room::getThreadID(){
+    return threadID;
 }

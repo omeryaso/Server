@@ -3,14 +3,14 @@
 //
 
 #include <unistd.h>
-#include <cstdlib>
 #include <iostream>
+#include <cstdlib>
 #include <iterator>
 #include <sstream>
 #include "ListGamesCommand.h"
 #include "RoomList.h"
 
-void ListGamesCommand::execute(vector<string> args) {
+void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* threadId) {
     std::ostringstream oss;
     int receiver = atoi(args.at(0).c_str());
     RoomList* roomList = RoomList::getInstance();

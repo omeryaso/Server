@@ -7,12 +7,15 @@
 #include <algorithm>
 
 RoomList *RoomList::instance = 0;
-
+pthread_mutex_t RoomList::lock;
 RoomList *RoomList::getInstance()
 {
-    if (instance == 0)
-    {
+    if (instance == 0) {
+        pthread_mutex_lock(&lock);
+        if (instance == 0) {
         instance = new RoomList;
+        }
+        pthread_mutex_unlock(&lock);
     }
     return instance;
 }
@@ -48,6 +51,6 @@ vector<string> RoomList::getAvailableRooms() {
 }
 
 void RoomList::setEnded(string &roomName) {
-    roomsMap[roomName]->setEnded();
+    roomsMap[roomName];
 
 }

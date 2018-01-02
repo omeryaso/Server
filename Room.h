@@ -27,7 +27,7 @@ public:
     * @parameters : socket - the function will initialize socket to be the
      * second player socket.
     **/
-    void join(int socket);
+    void join(int socket, pthread_t* threadId);
 
     /**
     * @name : Room
@@ -57,11 +57,19 @@ public:
     **/
     int getSecondSocket() const;
 
+    /**
+    * @name : getThreadID
+    * @return : returns the pthread id
+    **/
+    pthread_t* getThreadID();
+
+
 private:
     string name;
     int firstSocket;
     int secondSocket;
     state roomState;
+    pthread_t* threadID;
 };
 
 #endif //SERVER_ROOM_H

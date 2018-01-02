@@ -20,6 +20,8 @@ public:
     vector<string> getAvailableRooms();
 
 private:
+
+    static pthread_mutex_t lock;
     pthread_mutex_t roomsMapMutex;
     map<string, Room*> roomsMap;
     RoomList() {}; // Private c'tor

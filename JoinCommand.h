@@ -14,7 +14,7 @@ public:
 
     JoinCommand();
 
-    virtual void execute(vector<string> args);
+    virtual void execute(vector<string> args, int socket = 0, pthread_t*threadId = 0);
 };
 
 

@@ -4,11 +4,24 @@
 
 #include "CommandsManager.h"
 #include "StartCommand.h"
-#include "ListGamesCommand.h"
-#include "JoinCommand.h"
-#include "PlayCommand.h"
 #include "CloseCommand.h"
+#include "PlayCommand.h"
+#include "JoinCommand.h"
+#include "ListGamesCommand.h"
 
+CommandsManager* CommandsManager::instance = 0;
+pthread_mutex_t CommandsManager::lock;
+
+CommandsManager* CommandsManager::getInstance() {
+    if (instance == 0) {
+        pthread_mutex_lock(&lock);
+        if (instance == 0) {
+            instance = new CommandsManager();
+        }
+        pthread_mutex_unlock(&lock);
+    }
+    return instance;
+}
 
 CommandsManager::CommandsManager() {
     commandsMap["start"] = new StartCommand();
@@ -19,9 +32,10 @@ CommandsManager::CommandsManager() {
 
 }
 
-void CommandsManager::executeCommand(string command, vector<string> args) {
+void CommandsManager::executeCommand(string command, vector<string> args, int
+socket, pthread_t* threadId) {
     Command *commandObj = commandsMap[command];
-    commandObj->execute(args);
+    commandObj->execute(args, socket, threadId);
 }
 
 CommandsManager::~CommandsManager() {

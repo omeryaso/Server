@@ -4,11 +4,13 @@
 
 
 #include <cstring>
+#include <iostream>
+#include <unistd.h>
 #include "PlayCommand.h"
 #include "Room.h"
 #include "RoomList.h"
 
-void PlayCommand::execute(vector<string> args) {
+void PlayCommand::execute(vector<string> args, int socket, pthread_t* threadId) {
 
     RoomList* roomList = RoomList::getInstance();
     Room *room = roomList->getRoom(args.at(0));
@@ -24,7 +26,6 @@ void PlayCommand::execute(vector<string> args) {
     }
     // Read new exercise arguments
     int r = read(carrier, &size, sizeof(int));
-// todo: game over
     char input[size];
     if (r == -1) {
         cout << "Error reading move" << endl;

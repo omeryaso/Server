@@ -3,18 +3,29 @@
 //
 
 #include "Server.h"
+#include "CommandsManager.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <unistd.h>
 #include <string.h>
-#include <iostream>
 #include <fstream>
-using namespace std;
-#define MAX_CONNECTED_CLIENTS 20
+#include <sstream>
+#include <iostream>
+#include <unistd.h>
 
+using namespace std;
+
+#define MAX_CONNECTED_CLIENTS 1000
+#define MAX_COMMAND_LEN 11
+
+struct ThreadArgs {
+    pthread_t* id;
+    int serverSocket;
+};
+
+static void *acceptClients(void *);
+static void *handleClient(void *);
 
 Server::Server(): serverSocket(0) {
-    gameOver = false;
     int p;
     ifstream objectFile("../serverConfig.txt");
     if(!objectFile)
@@ -42,43 +53,64 @@ void Server::start() {
     }
     // Start listening to incoming connections
     listen(serverSocket, MAX_CONNECTED_CLIENTS);
-
+    pthread_create(&serverThreadId, NULL, &acceptClients, (void *)serverSocket);
 }
 
 // Handle requests from a specific client
-void Server::Play() {
-    bool firstTurn = true;
-    int error;
+static void *acceptClients(void *socket) {
+
+    long serverSocket = (long) socket;
+    // Define the client socket's structures
+    struct sockaddr_in clientAddress;
+    socklen_t clientAddressLen = sizeof(clientAddress);
     while (true) {
         cout << "Waiting for client connections..." << endl;
-
-        //accepting clients and if something want wrong exception is thrown
-        if(!acceptClients())
+        // Accept a new client connection
+        int clientSocket = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
+        cout << "Client connected" << endl;
+        if (clientSocket == -1)
             throw "Error on accept";
+        pthread_t threadId;
 
-        while(!gameOver){
-            if(firstTurn) {
-                error = handleClients(fCS, sCS);
-                firstTurn = false;
-            }
-            else {
-                error = handleClients(sCS, fCS);
-                firstTurn = true;
-            }
+        ThreadArgs args;
+        args.serverSocket = clientSocket;
+        args.id = &threadId;
 
-            if(error)
-                gameOver=true;
-        }
-
-        // Close communication with the first client
-        close(fCS);
-        cout << "First client disconnected" << endl;
-        // Close communication with the second client
-        close(sCS);
-        cout << "Second client disconnected" << endl;
-        gameOver = false;
-        firstTurn = true;
+        pthread_create(&threadId, NULL, &handleClient,  &args);
     }
+
+//    bool firstTurn = true;
+//    int error;
+//    while (true) {
+//        cout << "Waiting for client connections..." << endl;
+//
+//        //accepting clients and if something want wrong exception is thrown
+//        if(!acceptClients())
+//            throw "Error on accept";
+//
+//        while(!gameOver){
+//            if(firstTurn) {
+//                error = handleClients(fCS, sCS);
+//                firstTurn = false;
+//            }
+//            else {
+//                error = handleClients(sCS, fCS);
+//                firstTurn = true;
+//            }
+//
+//            if(error)
+//                gameOver=true;
+//        }
+//
+//        // Close communication with the first client
+//        close(fCS);
+//        cout << "First client disconnected" << endl;
+//        // Close communication with the second client
+//        close(sCS);
+//        cout << "Second client disconnected" << endl;
+//        gameOver = false;
+//        firstTurn = true;
+//    }
 
 }
 
@@ -144,6 +176,33 @@ void Server::Play() {
 //
 //    return 0;
 //}
+
+
+static void *handleClient(void *tArgs) {
+    struct ThreadArgs *args = (struct ThreadArgs *)tArgs;
+    long clientSocket = (long)args->serverSocket;
+    char commandStr[MAX_COMMAND_LEN];
+    // Read the command from the socket
+    int n = read(clientSocket, commandStr, MAX_COMMAND_LEN);
+    if (n == -1) {
+        cout << "Error reading command" << endl;
+        return NULL;
+    }
+    cout << "Received command: " << commandStr << endl;
+    // Split the command string to the command name and the arguments
+    string str(commandStr);
+    istringstream iss(str);
+    string command;
+    iss >> command;
+    vector<string> argsStr;
+    while (iss) {
+        string arg;
+        iss >> arg;
+        argsStr.push_back(arg);
+    }
+    CommandsManager::getInstance()->executeCommand(command, argsStr, clientSocket);
+    return NULL;
+}
 
 void Server::stop() {
     close(serverSocket);

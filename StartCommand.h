@@ -5,18 +5,14 @@
 #ifndef SERVER_STARTCOMMAND_H
 #define SERVER_STARTCOMMAND_H
 
-#include "Command.h"
-#include "Server.h"
-#include "Room.h"
 
+#include "Command.h"
 
 class StartCommand: public Command {
 
 public:
 
-    StartCommand();
-
-    virtual void execute(vector<string> args);
+    virtual void execute(vector<string> args, int socket = 0, pthread_t* threadId = 0);
 
 private:
     //list of rooms
