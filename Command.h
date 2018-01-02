@@ -8,8 +8,6 @@
 #include <string>
 #include <vector>
 
-#endif //SERVER_COMMAND_H
-
 using namespace std;
 
 class Command {
@@ -17,3 +15,5 @@ public:
     virtual void execute(vector<string> args, int socket = 0, pthread_t*threadId = 0) = 0;
     virtual ~Command() {}
 };
+
+#endif //SERVER_COMMAND_H
