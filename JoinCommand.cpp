@@ -5,6 +5,7 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <memory.h>
 #include "Room.h"
 #include "RoomList.h"
 #include "JoinCommand.h"
@@ -49,8 +50,85 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     }
     cout << args.at(0)<< "second client connected to game:"   << args.at(0)<<". let the game begin" << endl;
 
-    string command = "play";
-    vector<string> argsStr;
-    argsStr.push_back(args.at(0));
-    CommandsManager::getInstance()->executeCommand(command, argsStr, NULL, NULL);
+    bool firstTurn = true;
+
+    while(!gameOver){
+        if(firstTurn) {
+            handleClients(fCs, sCS);
+            firstTurn = false;
+        }
+        else {
+            handleClients(sCS, fCs);
+            firstTurn = true;
+        }
+    }
+
+    roomList->getRoom(args.at(0))->setEnded();
+
+}
+
+
+void JoinCommand::handleClients(int fCs, int sCS) {
+
+    int size = 0;
+    // Read new exercise arguments
+    int r = read(fCs, &size, sizeof(int));
+
+    char input[size];
+    bzero((char *)input, size*sizeof(char));
+    if (r == -1) {
+        cout << "Error reading move" << endl;
+        gameOver = true;
+        return;
+    }
+    if (r == 0) {
+        cout << "Client disconnected" << endl;
+        gameOver = true;
+        return;
+    }
+
+    int c = read(fCs, &input, size * sizeof(char));
+    //input validity
+    if (c == -1) {
+        cout << "Error reading move" << endl;
+        gameOver = true;
+        return;
+    }
+    if (c == 0) {
+        cout << "Client disconnected" << endl;
+        gameOver = true;
+        return;
+    }
+
+    //check if the input value indicates that the game is over
+    if (!strcmp(input, "End"))
+    {
+        cout << "End" << endl;
+        gameOver = true;
+        return;
+    }
+
+    if (!strcmp(input, "NoMove")){
+        cout << "NoMove" << endl;
+        return;
+    }
+
+    cout << "Got input: " << input << endl;
+
+    // Write the result back to the client
+    r = write(sCS, &size, sizeof(size));
+
+    if (r == -1) {
+        cout << "Error writing to socket" << endl;
+        gameOver = true;
+        return;
+    }
+
+    c = write(sCS, &input, sizeof(input));
+
+    if (c == -1) {
+        cout << "Error writing to socket" << endl;
+        gameOver = true;
+        return;
+    }
 }

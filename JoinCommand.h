@@ -13,6 +13,10 @@ class JoinCommand: public Command {
 public:
 
     virtual void execute(vector<string> args, int socket = 0, pthread_t*threadId = 0);
+
+private:
+    bool gameOver = false;
+    void handleClients(int firstSocket, int secondSocket);
 };
 
 
