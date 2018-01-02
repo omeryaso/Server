@@ -2,14 +2,16 @@
 // Created by omer on 28/12/17.
 //
 
+#include <cstdlib>
 #include <unistd.h>
 #include <iostream>
+#include <sstream>
 #include "RoomList.h"
 #include "StartCommand.h"
 
 
-
 void StartCommand::execute(vector<string> args, int socket, pthread_t*threadId) {
+
     // args[0] = the name of the room that wished to be opened, args[1] = the
     // server socket
     RoomList* roomList = RoomList::getInstance();
@@ -26,6 +28,5 @@ void StartCommand::execute(vector<string> args, int socket, pthread_t*threadId) 
 
     Room room(socket, args.at(0));
     roomList->insertRoom(room,args[0]);
-
 
 }

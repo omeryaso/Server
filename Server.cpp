@@ -7,7 +7,7 @@
 using namespace std;
 
 #define MAX_CONNECTED_CLIENTS 1000
-#define MAX_COMMAND_LEN 11
+#define MAX_COMMAND_LEN 50
 
 struct ThreadArgs {
     pthread_t* id;

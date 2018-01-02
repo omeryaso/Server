@@ -41,9 +41,11 @@ Room* RoomList::getRoom(string &roomName) {
 vector<string> RoomList::getAvailableRooms() {
     vector<string> availableRooms;
     pthread_mutex_lock(&roomsMapMutex);
-    for (map<string, Room*>::iterator it = roomsMap.begin(); it != roomsMap.end(); it++) {
-        if (it->second->getState() == waiting)
-            availableRooms.push_back(it->first);
+    for(std::map<string, Room*>::iterator iter = roomsMap.begin(); iter != roomsMap.end(); ++iter) {
+        if(roomsMap[iter->first]->getState() != active){
+        availableRooms.push_back(iter->first);
+        }
+        cout << iter->first << endl;
     }
     pthread_mutex_unlock(&roomsMapMutex);
 

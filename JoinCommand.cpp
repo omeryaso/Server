@@ -8,6 +8,7 @@
 #include "Room.h"
 #include "RoomList.h"
 #include "JoinCommand.h"
+#include "CommandsManager.h"
 
 
 void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) {
@@ -48,5 +49,8 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     }
     cout << args.at(0)<< "second client connected to game:"   << args.at(0)<<". let the game begin" << endl;
 
-
+    string command = "play";
+    vector<string> argsStr;
+    argsStr.push_back(args.at(0));
+    CommandsManager::getInstance()->executeCommand(command, argsStr, NULL, NULL);
 }

@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <iterator>
 #include <sstream>
+#include <memory.h>
 #include "ListGamesCommand.h"
 #include "RoomList.h"
 
@@ -14,17 +15,18 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
     std::ostringstream oss;
     RoomList* roomList = RoomList::getInstance();
     vector<string> rooms = roomList->getAvailableRooms();
-    int size = 2 * rooms.size();
+
+    int size = 0;
 
     if (!rooms.empty()) {
         // Convert all but the last element to avoid a trailing ","
-        copy(rooms.begin(), rooms.end()-1, ostream_iterator<string>(oss, ","));
-
+        copy(rooms.begin(), rooms.end()-1, ostream_iterator<string>(oss, ", "));
         // Now add the last element with no delimiter
         oss << rooms.back();
+        size = oss.str().size() +1;
     }
-
-    // Write the list size back to the client
+    cout << oss.str() << endl;
+    // Write the message size back to the client
     int s = write(socket, &size, sizeof(size));
 
     if (s == -1) {
@@ -33,12 +35,18 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
     }
 
     if(size) {
-        // Write the list back to the client
-        int l = write(socket, oss, sizeof(oss));
+        char message[size];
+        strcpy(message, oss.str().c_str());
+        message[size -1] = '\0';
+        // Write the message back to the client
+        int l = write(socket, message, sizeof(message));
 
         if (l == -1) {
             cout << "ListGames CMD: Error writing to socket" << endl;
             return;
         }
     }
+
+    // Close communication with the client
+    close(socket);
 }
