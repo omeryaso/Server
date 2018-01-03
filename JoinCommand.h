@@ -1,5 +1,4 @@
-//
-// Created by omer on 28/12/17.
+redundantated by omer on 28/12/17.
 //
 
 #ifndef SERVER_JOINCOMMAND_H
@@ -22,7 +21,6 @@ public:
     virtual void execute(vector<string> args, int socket = 0, pthread_t*threadId = 0);
 
 private:
-    bool gameOver = false;
     bool handleClients(int firstSocket, int secondSocket);
 };
 
