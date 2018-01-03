@@ -62,16 +62,17 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     cout << "second client connected to game: "   << args.at(0)<<". let's get ready to rumbleeeee!!!" << endl;
 
     bool firstTurn = true;
-
-    while(!gameOver){
+    bool over;
+    while(!room->getGameOver()){
         if(firstTurn) {
-            handleClients(fCs, sCS);
+            over = handleClients(fCs, sCS);
             firstTurn = false;
         }
         else {
-            handleClients(sCS, fCs);
+            over = handleClients(sCS, fCs);
             firstTurn = true;
         }
+        room->setGameOver(over);
     }
 
     roomList->closeRoom(args.at(0));
@@ -79,7 +80,7 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
 }
 
 
-void JoinCommand::handleClients(int fCs, int sCS) {
+bool JoinCommand::handleClients(int fCs, int sCS) {
 
     int size = 0;
     // Read new exercise arguments
@@ -89,39 +90,34 @@ void JoinCommand::handleClients(int fCs, int sCS) {
     bzero((char *)input, size*sizeof(char));
     if (r == -1) {
         cout << "Error reading move" << endl;
-        gameOver = true;
-        return;
+        return true;
     }
     if (r == 0) {
         cout << "Client disconnected" << endl;
-        gameOver = true;
-        return;
+        return true;
     }
 
     int c = read(fCs, &input, size * sizeof(char));
     //input validity
     if (c == -1) {
         cout << "Error reading move" << endl;
-        gameOver = true;
-        return;
+        return true;
     }
     if (c == 0) {
         cout << "Client disconnected" << endl;
-        gameOver = true;
-        return;
+        return true;
     }
 
     //check if the input value indicates that the game is over
     if (!strcmp(input, "End"))
     {
         cout << "End" << endl;
-        gameOver = true;
-        return;
+        return true;
     }
 
     if (!strcmp(input, "NoMove")){
         cout << "NoMove" << endl;
-        return;
+        return false;
     }
 
     cout << "Got input: " << input << endl;
@@ -131,15 +127,15 @@ void JoinCommand::handleClients(int fCs, int sCS) {
 
     if (r == -1) {
         cout << "Error writing to socket" << endl;
-        gameOver = true;
-        return;
+        return true;
     }
 
     c = write(sCS, &input, sizeof(input));
 
     if (c == -1) {
         cout << "Error writing to socket" << endl;
-        gameOver = true;
-        return;
+        return true;
     }
+
+    return false;
 }

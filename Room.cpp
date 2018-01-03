@@ -13,6 +13,7 @@ void Room::join(int socket, pthread_t* threadId) {
     secondSocket = socket;
     threadID = threadId;
     roomState = active;
+    gameOver = false;
 }
 
 int Room::getState() {
@@ -29,4 +30,13 @@ Room::~Room() {
     close(secondSocket);
     if (roomState== active)
         pthread_cancel(*threadID);
+}
+
+
+bool Room::getGameOver() {
+    return gameOver;
+}
+
+void Room::setGameOver(bool game) {
+    gameOver = game;
 }

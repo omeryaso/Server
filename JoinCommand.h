@@ -16,7 +16,7 @@ public:
 
 private:
     bool gameOver = false;
-    void handleClients(int firstSocket, int secondSocket);
+    bool handleClients(int firstSocket, int secondSocket);
 };
 
 

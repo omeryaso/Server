@@ -44,11 +44,12 @@ public:
     **/
     int getFirstSocket() const;
 
+    bool getGameOver();
 
-
-
+    void setGameOver(bool game);
 
 private:
+    bool gameOver;
     string name;
     int firstSocket;
     int secondSocket;
