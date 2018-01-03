@@ -20,8 +20,8 @@ RoomList *RoomList::getInstance()
     return instance;
 }
 
-void RoomList::insertRoom(Room &room, string &roomName) {
-    roomsMap[roomName] = &room;
+void RoomList::insertRoom(Room *room, string &roomName) {
+    roomsMap[roomName] = room;
 }
 
 void RoomList::deleteRoom(string &roomName) {

@@ -23,7 +23,7 @@ public:
     * @parameters : socket- this will be the first client socket
     * @return:
     **/
-    void insertRoom(Room &room, string &roomName);
+    void insertRoom(Room *room, string &roomName);
 
     /**
     * @name : RoomList

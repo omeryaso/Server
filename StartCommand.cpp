@@ -26,7 +26,7 @@ void StartCommand::execute(vector<string> args, int socket, pthread_t*threadId) 
         return;
     }
 
-    Room room(socket, args.at(0));
+    Room *room = new Room(socket, args.at(0));
     roomList->insertRoom(room,args[0]);
 
 }
