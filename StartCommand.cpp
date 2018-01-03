@@ -19,9 +19,12 @@ void StartCommand::execute(vector<string> args, int socket, pthread_t*threadId) 
 
     //if the room exists return to the player -1
     if(roomList->isRoomExist(args.at(0))) {
-        if(write(socket, &error, sizeof(int)) == -1) {
-            cout << "Error writing the turn of the first client";
+        int n =write(socket, &error, sizeof(int)) == -1;
+        if (n == -1) {
+            cout << "SC: Error writing the message to the player" << endl;
+            return;
         }
+        cout << "Cannot join room "<<args.at(0)<<". There is already a room with a name like this\n";
         return;
     }
 

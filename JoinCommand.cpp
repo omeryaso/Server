@@ -17,9 +17,16 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     int error;
     // args[0] = the name of the room that wished to be opened
     RoomList* roomList = RoomList::getInstance();
-    if (!roomList->isRoomExist(args.at(0)))
+    if (!roomList->isRoomExist(args.at(0))){
         error = -2;
         int n= write(socket, &error, sizeof(int));
+        if (n == -1) {
+            cout << "JC: Error writing the message to the player" << endl;
+            return;
+        }
+        cout << "cannot join game "<<args.at(0)<<". it doesn't exist.\n";
+        return;
+    }
     Room *room = roomList->getRoom(args.at(0));
 
     // put both the sockets into integers.
