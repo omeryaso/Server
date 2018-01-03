@@ -42,14 +42,14 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
         return;
     }
     order++;
-    cout << args.at(0)<< "first client connected to game: " << args.at(0)<<endl;
+    cout << "first client connected to game: " << args.at(0)<<endl;
     //returns to client if he connected
     //in case of an error prints were the error is end returns.
     if(write(sCS, &order, sizeof(int)) == -1) {
         cout << "Error writing the turn of the first client";
         return;
     }
-    cout << args.at(0)<< "second client connected to game:"   << args.at(0)<<". let the game begin" << endl;
+    cout << "second client connected to game: "   << args.at(0)<<". let's get ready to rumbleeeee!!!" << endl;
 
     bool firstTurn = true;
 
