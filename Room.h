@@ -44,8 +44,16 @@ public:
     **/
     int getFirstSocket() const;
 
+    /**
+    * @name : getGameOver
+    * @return : returns gameOver boolean
+    **/
     bool getGameOver();
-
+    /**
+    * @name : setGameOver
+    * @parameters: game - set gameOver to be game
+    * @return : ignored
+    **/
     void setGameOver(bool game);
 
 private:

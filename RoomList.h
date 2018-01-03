@@ -12,16 +12,17 @@
 class RoomList {
 public:
     /**
-    * @name : Room
-    * @parameters : socket- this will be the first client socket
-    *               room - this is the name (string) of the room
+    * @name : *getInstance
+    * @parameters : ignored
+    * @return : returns an instance of roomList (creat new one if not exist)
     **/
     static RoomList *getInstance();
 
     /**
     * @name : RoomList
     * @parameters : socket- this will be the first client socket
-    * @return:
+    * @return: ignored
+    * @brief: insert a room to gameList map
     **/
     void insertRoom(Room *room, string &roomName);
 
@@ -33,11 +34,11 @@ public:
     void deleteRoom(string &roomName);
 
     /**
-     * @name : RoomList
-     * @parameters :
-     * @return:
+     * @name : closeAllRooms
+     * @brief closing all the rooms in the map
+     * @parameters : ignored
+     * @return: ignored
      **/
-
     void closeAllRooms();
 
     /**
@@ -76,7 +77,6 @@ private:
     RoomList() {}; // Private c'tor
     RoomList(const RoomList &other); // Private copy c'tor
     ~RoomList() {};
-
     static RoomList *instance;
 };
 

@@ -202,36 +202,3 @@ void Server::stop() {
     RoomList* roomList = RoomList::getInstance();
     roomList->closeAllRooms();
 }
-
-//todo: moved to start\join command delete if everything work.
-//int Server::acceptClients() {
-//    int order = 1;
-//
-//    // Define the client socket's structures
-//    struct sockaddr_in clientAddress;
-//    socklen_t clientAddressLen;
-//
-//    // Accept first client connection
-//    fCS = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
-//    cout << "first client connected" << endl;
-//
-//    // Accept second client connection
-//    sCS = accept(serverSocket, (struct sockaddr *)&clientAddress, &clientAddressLen);
-//    cout << "second client connected" << endl;
-//    if (fCS == -1 || sCS == -1)
-//        return 0;
-//
-//    //returns to each client if he connected first or second.
-//    //in case of an error prints were the error is end returns 0.
-//    if(write(fCS, &order, sizeof(int)) == -1) {
-//        cout << "Error writing the turn of the first client";
-//        return 0;
-//    }
-//    order++;
-//    if(write(sCS, &order, sizeof(int)) == -1) {
-//        cout << "Error writing the turn of the second client";
-//        return 0;
-//    }
-//
-//    return 1;
-//}

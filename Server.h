@@ -18,15 +18,28 @@
 
 class Server {
 public:
+    /**
+    * @name : server
+    * @brief : the server constructor
+    **/
     Server();
+
+    /**
+    * @name : start
+    * @brief : starts the server
+    **/
     void start();
+
+    /**
+    * @name : stop
+    * @return : stops the server
+    **/
     void stop();
 
 private:
     int port;
     int serverSocket; // the socket's file descriptor
     pthread_t serverThreadId;
-    bool shutDown = false;
 };
 
 
