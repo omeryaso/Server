@@ -7,7 +7,6 @@
 
 Room::Room(int socket, const string &roomName) :firstSocket(socket), name(roomName) {
     roomState = waiting;
-    secondSocket = NULL;
 }
 
 void Room::join(int socket, pthread_t* threadId) {
@@ -26,12 +25,6 @@ int Room::getFirstSocket() const{
     return firstSocket;
 }
 
-
-
-
-
-
-}
 
 Room::~Room() {
     close(firstSocket);

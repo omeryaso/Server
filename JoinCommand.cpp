@@ -13,10 +13,13 @@
 
 
 void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) {
+
+    int error;
     // args[0] = the name of the room that wished to be opened
     RoomList* roomList = RoomList::getInstance();
     if (!roomList->isRoomExist(args.at(0)))
-        return;
+        error = -2;
+        int n= write(socket, &error, sizeof(int));
     Room *room = roomList->getRoom(args.at(0));
 
     // put both the sockets into integers.
@@ -25,7 +28,7 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
 
     //if the room that wished to be joined is full already then return -1
     if (room->getState() == active) {
-        int error = -1;
+        error = -1;
         int n= write(sCS, &error, sizeof(int));
         if (n == -1) {
             cout << "JC: Error writing the message to the player" << endl;
