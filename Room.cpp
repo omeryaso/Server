@@ -27,5 +27,6 @@ int Room::getFirstSocket() const{
 Room::~Room() {
     close(firstSocket);
     close(secondSocket);
-    pthread_cancel(*threadID);
+    if (roomState== active)
+        pthread_cancel(*threadID);
 }

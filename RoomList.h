@@ -38,6 +38,7 @@ public:
      * @return:
      **/
 
+    void closeAllRooms();
 
     /**
     * @name : getRoom
