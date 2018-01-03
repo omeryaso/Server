@@ -51,7 +51,10 @@ vector<string> RoomList::getAvailableRooms() {
     return availableRooms;
 }
 
-void RoomList::setEnded(string &roomName) {
-    roomsMap[roomName];
 
+
+
+void RoomList::closeRoom(string &roomName) {
+    delete(roomsMap[roomName]);
+    roomsMap.erase(roomName);
 }

@@ -37,7 +37,7 @@ public:
      * @parameters :
      * @return:
      **/
-    void setEnded(string &roomName);
+
 
     /**
     * @name : RoomList
@@ -59,6 +59,8 @@ public:
     * @return:
     **/
     vector<string> getAvailableRooms();
+
+    void closeRoom(string &roomName);
 
 private:
 

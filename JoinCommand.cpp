@@ -64,7 +64,7 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
         }
     }
 
-    roomList->getRoom(args.at(0))->setEnded();
+    roomList->closeRoom(args.at(0));
 
 }
 
