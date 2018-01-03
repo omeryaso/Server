@@ -14,9 +14,6 @@ public:
 
     virtual void execute(vector<string> args, int socket = 0, pthread_t* threadId = 0);
 
-private:
-    //list of rooms
-
 };
 
 #endif //SERVER_STARTCOMMAND_H

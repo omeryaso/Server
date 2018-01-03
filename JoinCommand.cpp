@@ -28,7 +28,7 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
         int error = -1;
         int n= write(sCS, &error, sizeof(int));
         if (n == -1) {
-            cout << "JC: Error writing the message to the player";
+            cout << "JC: Error writing the message to the player" << endl;
             return;
         }
             cout << "cannot join game "<<args.at(0)<<". it is already full\n";
@@ -38,9 +38,10 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     int order = 1;
     room->join(sCS, threadId);
     if(write(fCs, &order, sizeof(int)) == -1) {
-        cout << "Error writing the turn of the first client";
+        cout << "Error writing the turn of the first client"  << endl;
         return;
     }
+    order++;
     cout << args.at(0)<< "first client connected to game: " << args.at(0)<<endl;
     //returns to client if he connected
     //in case of an error prints were the error is end returns.
