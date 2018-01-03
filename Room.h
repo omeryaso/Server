@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum state {waiting = 0, active = 1, finished = 2};
+enum state {waiting = 0, active = 1};
 
 
 class Room {
@@ -22,6 +22,8 @@ public:
     **/
     Room(int socket, const string &roomName);
 
+    ~Room();
+
     /**
     * @name : Join
     * @parameters : socket - the function will initialize socket to be the
@@ -33,7 +35,7 @@ public:
     * @name : Room
     * @return : returns the name of this room.
     **/
-    string getName () const;
+
 
     /**
     * @name : getState
@@ -51,17 +53,8 @@ public:
     **/
     int getFirstSocket() const;
 
-    /**
-    * @name : getSecondSocket
-    * @return : returns second Second Socket
-    **/
-    int getSecondSocket() const;
 
-    /**
-    * @name : getThreadID
-    * @return : returns the pthread id
-    **/
-    pthread_t* getThreadID();
+
 
 
 private:
