@@ -38,7 +38,7 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     int order = 1;
     room->join(sCS, threadId);
     if(write(fCs, &order, sizeof(int)) == -1) {
-        cout << "Error writing the turn of the first client"  << endl;
+        cout << "Error writing the turn of the first client" << endl;
         return;
     }
     order++;

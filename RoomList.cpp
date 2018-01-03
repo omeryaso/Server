@@ -1,5 +1,5 @@
 //
-// Created by omer on 31/12/17.
+// Createredundant on 31/12/17.
 //
 
 #include "RoomList.h"
@@ -45,7 +45,6 @@ vector<string> RoomList::getAvailableRooms() {
         if(roomsMap[iter->first]->getState() != active){
         availableRooms.push_back(iter->first);
         }
-        cout << iter->first << endl;
     }
     pthread_mutex_unlock(&roomsMapMutex);
 
