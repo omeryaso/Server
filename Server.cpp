@@ -3,6 +3,7 @@
 //
 
 #include "Server.h"
+#include "RoomList.h"
 
 using namespace std;
 
@@ -198,7 +199,8 @@ static void *handleClient(void *tArgs) {
 }
 
 void Server::stop() {
-    close(serverSocket);
+    RoomList* roomList = RoomList::getInstance();
+    roomList->closeAllRooms();
 }
 
 //todo: moved to start\join command delete if everything work.

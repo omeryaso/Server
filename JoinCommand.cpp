@@ -48,7 +48,7 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     int order = 1;
     room->join(sCS, threadId);
     if(write(fCs, &order, sizeof(int)) == -1) {
-        cout << "Error writing the turn of the first client" << endl;
+        cout << "JC:Error writing the turn of the first client" << endl;
         return;
     }
     order++;
@@ -56,7 +56,7 @@ void JoinCommand::execute(vector<string> args, int socket, pthread_t* threadId) 
     //returns to client if he connected
     //in case of an error prints were the error is end returns.
     if(write(sCS, &order, sizeof(int)) == -1) {
-        cout << "Error writing the turn of the first client";
+        cout << "JC:Error writing the turn of the second client";
         return;
     }
     cout << "second client connected to game: "   << args.at(0)<<". let's get ready to rumbleeeee!!!" << endl;

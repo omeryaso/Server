@@ -25,7 +25,6 @@ void ListGamesCommand::execute(vector<string> args, int socket,pthread_t* thread
         oss << rooms.back();
         size = oss.str().size() +1;
     }
-    cout << oss.str() << endl;
     // Write the message size back to the client
     int s = write(socket, &size, sizeof(size));
 

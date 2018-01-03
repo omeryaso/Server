@@ -58,3 +58,12 @@ void RoomList::closeRoom(string &roomName) {
     delete(roomsMap[roomName]);
     roomsMap.erase(roomName);
 }
+
+void RoomList::closeAllRooms() {
+    pthread_mutex_lock(&lock);
+    for(std::map<string, Room*>::iterator iter = roomsMap.begin(); iter != roomsMap.end(); ++iter) {
+        delete(roomsMap[iter->first]);
+        roomsMap.erase((iter->first));
+    }
+    pthread_mutex_unlock(&lock);
+}
