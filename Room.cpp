@@ -15,8 +15,6 @@ void Room::join(int socket, pthread_t* threadId) {
     roomState = active;
 }
 
-
-
 int Room::getState() {
     return roomState;
 }

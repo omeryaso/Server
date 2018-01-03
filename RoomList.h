@@ -40,26 +40,31 @@ public:
 
 
     /**
-    * @name : RoomList
-    * @parameters :
-    * @return:
+    * @name : getRoom
+    * @parameters : roomName - the name of the room
+    * @return: returns pointer to the room
     **/
     Room* getRoom(string &roomName);
 
     /**
-    * @name : RoomList
-    * @parameters : socket- this will be the first client socket
-    * @return:
+    * @name : isRoomExist
+    * @parameters : roomName- the room name
+    * @return: return true if the room exist false otherwise
     **/
     bool isRoomExist(string &roomName);
 
     /**
-    * @name : RoomList
-    * @parameters :
-    * @return:
+    * @name : getAvailableRooms
+    * @parameters : ignored
+    * @return: return a vector with the game available rooms
     **/
     vector<string> getAvailableRooms();
 
+    /**
+    * @name : closeRoom
+    * @parameters : roomName - closing the room
+    * @return: ignored
+    **/
     void closeRoom(string &roomName);
 
 private:

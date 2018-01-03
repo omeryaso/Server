@@ -16,7 +16,7 @@ class Room {
 public:
 
     /**
-    * @name : Room
+    * @name : Room - the constructor
     * @parameters : socket- this will be the first client socket
     *               room - this is the name (string) of the room
     **/
@@ -32,20 +32,11 @@ public:
     void join(int socket, pthread_t* threadId);
 
     /**
-    * @name : Room
-    * @return : returns the name of this room.
-    **/
-
-
-    /**
     * @name : getState
     * @return : returns the state of this room. 0 if its waiting for client
     * and 1 if the room is active.
     **/
     int getState();
-
-
-    void setEnded();
 
     /**
     * @name : getFirstSocket
