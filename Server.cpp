@@ -70,6 +70,8 @@ static void *acceptClients(void *socket) {
         args.serverSocket = clientSocket;
         args.id = &threadId;
 
+//       todo tasks[i] = new Task(print, (void *)i);
+//       todo pool.addTask(tasks[i]);
         pthread_create(&threadId, NULL, &handleClient,  &args);
     }
 
@@ -102,6 +104,7 @@ static void *handleClient(void *tArgs) {
 }
 
 void Server::stop() {
+    //todo: pool.terminate();
     RoomList* roomList = RoomList::getInstance();
     roomList->closeAllRooms();
 }
