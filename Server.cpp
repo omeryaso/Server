@@ -9,6 +9,7 @@ using namespace std;
 
 #define MAX_CONNECTED_CLIENTS 1000
 #define MAX_COMMAND_LEN 50
+#define THREADS_NUM 5
 
 struct ThreadArgs {
     pthread_t* id;
@@ -52,7 +53,6 @@ void Server::start() {
 
 // Handle requests from a specific client
 static void *acceptClients(void *socket) {
-
     long serverSocket = (long) socket;
     // Define the client socket's structures
     struct sockaddr_in clientAddress;
@@ -69,9 +69,8 @@ static void *acceptClients(void *socket) {
         ThreadArgs args;
         args.serverSocket = clientSocket;
         args.id = &threadId;
-
-//       todo tasks[i] = new Task(print, (void *)i);
-//       todo pool.addTask(tasks[i]);
+//      todo: Task *task = new Task(&handleClient, &args);
+//       todo: pool.addTask(task);
         pthread_create(&threadId, NULL, &handleClient,  &args);
     }
 
