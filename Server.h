@@ -8,6 +8,7 @@
 
 #include <sys/types.h>
 #include "CommandsManager.h"
+#include "ThreadPool.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
@@ -40,6 +41,7 @@ private:
     int port;
     int serverSocket; // the socket's file descriptor
     pthread_t serverThreadId;
+    ThreadPool *pool;
 };
 
 

@@ -11,6 +11,11 @@ using namespace std;
 #define MAX_COMMAND_LEN 50
 #define THREADS_NUM 5
 
+struct args {
+    int serverSocket;
+    ThreadPool *threadPool;
+};
+
 struct ThreadArgs {
     pthread_t* id;
     int serverSocket;
@@ -19,7 +24,7 @@ struct ThreadArgs {
 static void *acceptClients(void *);
 static void *handleClient(void *);
 
-Server::Server(): serverSocket(0) {
+Server::Server(): serverSocket(0), pool(new ThreadPool(THREADS_NUM)) {
     int p;
     ifstream objectFile("../serverConfig.txt");
     if(!objectFile)
@@ -47,13 +52,17 @@ void Server::start() {
     }
     // Start listening to incoming connections
     listen(serverSocket, MAX_CONNECTED_CLIENTS);
-    pthread_create(&serverThreadId, NULL, &acceptClients, (void *)serverSocket);
+    args args1;
+    args1.threadPool = pool;
+    args1.serverSocket = serverSocket;
+    pthread_create(&serverThreadId, NULL, &acceptClients, &args1);
 
 }
 
 // Handle requests from a specific client
-static void *acceptClients(void *socket) {
-    long serverSocket = (long) socket;
+static void *acceptClients(void *tArgs) {
+    struct args *args1 = (struct args *)tArgs;
+    long serverSocket = (long) args1->serverSocket;
     // Define the client socket's structures
     struct sockaddr_in clientAddress;
     socklen_t clientAddressLen = sizeof(clientAddress);
@@ -69,8 +78,8 @@ static void *acceptClients(void *socket) {
         ThreadArgs args;
         args.serverSocket = clientSocket;
         args.id = &threadId;
-//      todo: Task *task = new Task(&handleClient, &args);
-//       todo: pool.addTask(task);
+        Task *task = new Task(&handleClient, &args);
+        args1->threadPool->addTask(task);
         pthread_create(&threadId, NULL, &handleClient,  &args);
     }
 
@@ -103,7 +112,7 @@ static void *handleClient(void *tArgs) {
 }
 
 void Server::stop() {
-    //todo: pool.terminate();
+    pool->terminate();
     RoomList* roomList = RoomList::getInstance();
     roomList->closeAllRooms();
 }
