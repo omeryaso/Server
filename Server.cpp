@@ -11,7 +11,7 @@ using namespace std;
 #define MAX_COMMAND_LEN 50
 #define THREADS_NUM 5
 
-struct args {
+struct ConnectArgs {
     int serverSocket;
     ThreadPool *threadPool;
 };
@@ -52,17 +52,18 @@ void Server::start() {
     }
     // Start listening to incoming connections
     listen(serverSocket, MAX_CONNECTED_CLIENTS);
-    args args1;
-    args1.threadPool = pool;
-    args1.serverSocket = serverSocket;
-    pthread_create(&serverThreadId, NULL, &acceptClients, &args1);
+    ConnectArgs *args;
+    args->serverSocket = serverSocket;
+    args->threadPool = pool;
+    pthread_create(&serverThreadId, NULL, &acceptClients, args);
 
 }
 
 // Handle requests from a specific client
 static void *acceptClients(void *tArgs) {
-    struct args *args1 = (struct args *)tArgs;
-    long serverSocket = (long) args1->serverSocket;
+    struct ConnectArgs *servArg = (struct ConnectArgs *)tArgs;
+    int serverSocket =  servArg->serverSocket;
+   // long serverSocket = (long) socket;
     // Define the client socket's structures
     struct sockaddr_in clientAddress;
     socklen_t clientAddressLen = sizeof(clientAddress);
@@ -79,8 +80,8 @@ static void *acceptClients(void *tArgs) {
         args.serverSocket = clientSocket;
         args.id = &threadId;
         Task *task = new Task(&handleClient, &args);
-        args1->threadPool->addTask(task);
-        pthread_create(&threadId, NULL, &handleClient,  &args);
+        servArg->threadPool->addTask(task);
+        //pthread_create(&threadId, NULL, &handleClient,  &args);
     }
 
 }
