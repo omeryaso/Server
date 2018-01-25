@@ -52,7 +52,7 @@ void Server::start() {
     }
     // Start listening to incoming connections
     listen(serverSocket, MAX_CONNECTED_CLIENTS);
-    ConnectArgs *args;
+    ConnectArgs *args = new ConnectArgs;
     args->serverSocket = serverSocket;
     args->threadPool = pool;
     pthread_create(&serverThreadId, NULL, &acceptClients, args);
